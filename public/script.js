@@ -20,16 +20,18 @@ new Vue({
             this.items = this.items.concat(append);
         },
         onSubmit: function() {
-            this.loading = true;
-            this.items = [];
-            this.$http
-                .get('/search/'.concat(this.newSearch))
-                .then(function (res) {
-                    this.lastSearch = this.newSearch;
-                    this.results = res.data;
-                    this.appendItems();
-                    this.loading = false;
-                });
+            if (this.newSearch.length) {
+                this.loading = true;
+                this.items = [];
+                this.$http
+                    .get('/search/'.concat(this.newSearch))
+                    .then(function (res) {
+                        this.lastSearch = this.newSearch;
+                        this.results = res.data;
+                        this.appendItems();
+                        this.loading = false;
+                    });
+            }
         },
         addItem: function (index) {
             this.total += 9.99;
